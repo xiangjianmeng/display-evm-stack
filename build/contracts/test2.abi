@@ -1,0 +1,9 @@
+[
+	{
+		"inputs": [],
+		"name": "test2Revert",
+		"outputs": [],
+		"stateMutability": "pure",
+		"type": "function"
+	}
+]
