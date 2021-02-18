@@ -1,5 +1,12 @@
 [
 	{
+		"inputs": [],
+		"name": "test5Revert",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -12,14 +19,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "test1Revert",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "test2",
+		"name": "test6",
 		"outputs": [
 			{
 				"internalType": "address",

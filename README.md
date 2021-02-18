@@ -10,15 +10,21 @@ git checkout mxj/evm-debug
 
 ### 1.2 Deploy test contract
 
-1. Deploy `./contracts/test2.sol` 
+1. Deploy `./contracts/test6.sol` 
 
-2. Deploy `./contracts/test1.sol` with test2’s address
+2. Deploy `./contracts/test5.sol` with test6’s address
 
-3. Call test1’s test1Revert and get the `txhash`
+3. Deploy `./contracts/test4.sol` with test5’s address
 
-4. Find trace file in `./tools/_cache_evm/traces` according to the `txhash` and copy it to `./traces` of current repository
+4. Deploy `./contracts/test3.sol` with test4’s address
 
-5. Down load the repository
+5. Deploy `./contracts/test2.sol` with test3’s address
+
+6. Deploy `./contracts/test1.sol` with test2’s address
+
+7. Call test1’s test1Revert and get the `txhash`
+
+8. Down load the repository
 
    ```
    git clone https://github.com/xiangjianmeng/display-evm-stack.git
@@ -26,8 +32,11 @@ git checkout mxj/evm-debug
    mkdir traces
    cp ${path}/okexchain/tools/_cache_evm/traces/${txhash} ./traces
    ```
+   
+9. Find trace file in `./tools/_cache_evm/traces` according to the `txhash` and copy it to `./traces` of current repository
 
-6. Copy abi of test2.sol from remix to `./build/contracts/test2.abi` and the same to test1.sol
+
+10. Copy abi of test2.sol from remix to `./build/contracts/test2.abi` and the same to test1.sol
 
    ![image-20210218113915368](/Users/meng/Library/Application Support/typora-user-images/image-20210218113915368.png)
 
@@ -37,33 +46,67 @@ git checkout mxj/evm-debug
 
 ```python
 if __name__ == '__main__':
+    if __name__ == '__main__':
     # web3.connect("http://okexchaintest-rpc2.okexcn.com:26659")
     web3.connect("http://127.0.0.1:8545")
-    txhash = "0x9451efb3820851d5110a3b61cd4886916cc3fa6669487b18f98a1fa48f37696c"
+    txhash = "0x52a3cdc7a9dbff8b61fd85dfc35f393eb022d22779cd1f0fc69491c3aee4b61a"
 
-    build = Path(__file__).parent.joinpath("build/contracts")
-
-    with open(build.joinpath("test1.abi")) as json_file:
-        test1abi = json.load(json_file)
-
-    with open(build.joinpath("test2.abi")) as json_file:
-        test2abi = json.load(json_file)
-        
-    addr_to_contract["0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7"] = Contract(EthAddress("0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7"), test1abi)
-    addr_to_contract["0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36"] = Contract(EthAddress("0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36"), test2abi)
-
-    tracesPath = Path(__file__).parent.joinpath("traces")
+    resigter_contract("0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36", "test6.abi")
+    resigter_contract("0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7", "test5.abi")
+    resigter_contract("0xd84d4030880352B03F6746ACa893a4aF9EDC6134", "test4.abi")
+    resigter_contract("0x48855b5882C30d6a2C926F9cb80782f58B10d497", "test3.abi")
+    resigter_contract("0x55Ab234103Ec829a76D2a73e3456389e95387D4D", "test2.abi")
+    resigter_contract("0xA4c1095732718699cf068BeD7CC780c175903b1e", "test1.abi")
 ```
 
-1. change the `txhash` to the hash of tx to display the call stack.
-2. Register the contract to `addr_to_contract`, key is the address of contract, value is the Contract instance. If thers is no corresponding abi of a contract, ignore the arg. It will only display the signature of the function without function name.
+1. Change the `txhash` to the hash of tx whose call stack to be displayed.
+2. Register the contract through `resigter_contract`, arg[0] is the address of contract, arg[1] is the abi of contract. If thers is no corresponding abi of a contract, ignore arg[1]. It will only display the signature of the function without function name.
 
 ### 2.2 Run `__main__.py`
 
 ```
-$ python3 __main__.py                                                                                                                                                                            
-[{'from': '0xd84d4030880352B03F6746ACa893a4aF9EDC6134', 'to': '0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7', 'op': 'STATICCALL', 'function': 'test2Revert()', 'inputs': {}, 'revert_msg': 'call test2Revert'}]
+$ python3 __main__.py  
+[
+    {
+        "from": "0xA4c1095732718699cf068BeD7CC780c175903b1e",
+        "to": "0x55Ab234103Ec829a76D2a73e3456389e95387D4D",
+        "op": "STATICCALL",
+        "function": "test2Revert()",
+        "inputs": {}
+    },
+    {
+        "from": "0x55Ab234103Ec829a76D2a73e3456389e95387D4D",
+        "to": "0x48855b5882C30d6a2C926F9cb80782f58B10d497",
+        "op": "STATICCALL",
+        "function": "test3Revert()",
+        "inputs": {}
+    },
+    {
+        "from": "0x48855b5882C30d6a2C926F9cb80782f58B10d497",
+        "to": "0xd84d4030880352B03F6746ACa893a4aF9EDC6134",
+        "op": "STATICCALL",
+        "function": "test4Revert()",
+        "inputs": {}
+    },
+    {
+        "from": "0xd84d4030880352B03F6746ACa893a4aF9EDC6134",
+        "to": "0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7",
+        "op": "STATICCALL",
+        "function": "test5Revert()",
+        "inputs": {}
+    },
+    {
+        "from": "0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7",
+        "to": "0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36",
+        "op": "STATICCALL",
+        "function": "test6Revert()",
+        "inputs": {},
+        "revert_msg": "call test6Revert"
+    }
+]                                                                                                                                                                          
 ```
+
+Every item in the stack represents that contract `from` calls the `function` of contract `to`.
 
 
 

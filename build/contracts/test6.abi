@@ -1,0 +1,9 @@
+[
+	{
+		"inputs": [],
+		"name": "test6Revert",
+		"outputs": [],
+		"stateMutability": "pure",
+		"type": "function"
+	}
+]

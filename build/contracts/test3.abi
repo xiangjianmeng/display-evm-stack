@@ -12,14 +12,14 @@
 	},
 	{
 		"inputs": [],
-		"name": "test1Revert",
+		"name": "test3Revert",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "test2",
+		"name": "test4",
 		"outputs": [
 			{
 				"internalType": "address",

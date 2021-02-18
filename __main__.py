@@ -18,7 +18,7 @@ addr_to_contract: Dict = {}
 
 class Contract:
 
-    def __init__(self, address: EthAddress, abi: Dict = None, sources: Dict = None) -> None:
+    def __init__(self, address, abi: Dict = None, sources: Dict = None) -> None:
         self._sources = sources
         self.abi = abi
         self.address = address
@@ -81,9 +81,8 @@ class Contract:
 
 
 def _get_method_object(
-    address: str, abi: Dict, name: str, owner: Optional[AccountsType], natspec: Dict
+        address: str, abi: Dict, name: str, owner: Optional[AccountsType], natspec: Dict
 ) -> Union["ContractCall", "ContractTx"]:
-
     if "constant" in abi:
         constant = abi["constant"]
     else:
@@ -124,21 +123,28 @@ def _get_last_map(address, sig: str) -> Dict:
     return last_map
 
 
+def resigter_contract(address: str, abi_file: str = None):
+    if abi_file != None:
+        with open(build.joinpath(abi_file)) as json_file:
+            abi = json.load(json_file)
+        addr_to_contract[address] = Contract(address, abi)
+    else:
+        addr_to_contract[address] = Contract(address)
+
+
+build = Path(__file__).parent.joinpath("build/contracts")
+
 if __name__ == '__main__':
     # web3.connect("http://okexchaintest-rpc2.okexcn.com:26659")
     web3.connect("http://127.0.0.1:8545")
-    txhash = "0x9451efb3820851d5110a3b61cd4886916cc3fa6669487b18f98a1fa48f37696c"
+    txhash = "0x52a3cdc7a9dbff8b61fd85dfc35f393eb022d22779cd1f0fc69491c3aee4b61a"
 
-    build = Path(__file__).parent.joinpath("build/contracts")
-
-    with open(build.joinpath("test1.abi")) as json_file:
-        test1abi = json.load(json_file)
-
-    with open(build.joinpath("test2.abi")) as json_file:
-        test2abi = json.load(json_file)
-
-    addr_to_contract["0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7"] = Contract(EthAddress("0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7"), test1abi)
-    addr_to_contract["0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36"] = Contract(EthAddress("0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36"), test2abi)
+    resigter_contract("0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36", "test6.abi")
+    resigter_contract("0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7", "test5.abi")
+    resigter_contract("0xd84d4030880352B03F6746ACa893a4aF9EDC6134", "test4.abi")
+    resigter_contract("0x48855b5882C30d6a2C926F9cb80782f58B10d497", "test3.abi")
+    resigter_contract("0x55Ab234103Ec829a76D2a73e3456389e95387D4D", "test2.abi")
+    resigter_contract("0xA4c1095732718699cf068BeD7CC780c175903b1e", "test1.abi")
 
     tracesPath = Path(__file__).parent.joinpath("traces")
 
@@ -215,7 +221,7 @@ if __name__ == '__main__':
                 last["address"], trace[i]["stack"][-2][-40:], trace[i]["stack"][-3]
             )
 
-        if trace[i]["depth"]>= maxDepth and opcode in ("RETURN", "REVERT", "INVALID", "SELFDESTRUCT"):
+        if trace[i]["depth"] >= maxDepth and opcode in ("RETURN", "REVERT", "INVALID", "SELFDESTRUCT"):
             subcall: dict = next(
                 i for i in receipt._subcalls[::-1] if i["to"] == last["address"]  # type: ignore
             )
@@ -244,5 +250,4 @@ if __name__ == '__main__':
                         except Exception:
                             subcall["revert_msg"] = data.hex()
 
-    print(receipt._subcalls)
-
+    print(json.dumps(receipt._subcalls, indent=4))
