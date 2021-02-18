@@ -24,7 +24,7 @@ git checkout mxj/evm-debug
 
 7. Call test1’s test1Revert and get the `txhash`
 
-8. Down load the repository
+8. Download the repository
 
    ```
    git clone https://github.com/xiangjianmeng/display-evm-stack.git
