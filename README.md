@@ -38,7 +38,7 @@ git checkout mxj/evm-debug
 
 10. Copy abi of test2.sol from remix to `./build/contracts/test2.abi` and the same to test1.sol
 
-   ![image-20210218113915368](/Users/meng/Library/Application Support/typora-user-images/image-20210218113915368.png)
+   ![image-20210218113915368](./img/image-20210218113915368.png)
 
 ## 2. Display the transaction call stack
 
