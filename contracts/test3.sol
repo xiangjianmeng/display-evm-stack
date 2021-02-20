@@ -1,9 +1,7 @@
-// SPDX-License-Identifier: GPL-3.0
-
 pragma solidity >=0.7.0 <0.8.0;
 
 interface Test4 {
-    function test4Revert() pure external;
+    function test4Revert(address tmp) pure external;
 }
 
 contract Test3 {
@@ -14,7 +12,11 @@ contract Test3 {
         test4 = test;
     }
 
-    function test3Revert() public {
-        Test4(test4).test4Revert();
+    function test3Revert(address tmp) public {
+        _test3Revert(tmp);
+    }
+
+    function _test3Revert(address tmp) public {
+        Test4(test4).test4Revert(tmp);
     }
 }

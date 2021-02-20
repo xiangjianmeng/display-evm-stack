@@ -4,7 +4,7 @@ pragma solidity >=0.7.0 <0.8.0;
 
 
 interface Test2 {
-    function test2Revert() pure external;
+    function test2Revert(address tmp) pure external;
 }
 
 contract Test1 {
@@ -15,7 +15,11 @@ contract Test1 {
         test2 = test;
     }
 
-    function test1Revert() public {
-        Test2(test2).test2Revert();
+    function test1Revert(address tmp) public {
+        _test1Revert(tmp);
+    }
+
+    function _test1Revert(address tmp) public {
+        Test2(test2).test2Revert(tmp);
     }
 }

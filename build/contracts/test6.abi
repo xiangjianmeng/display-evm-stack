@@ -1,6 +1,12 @@
 [
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tmp",
+				"type": "address"
+			}
+		],
 		"name": "test6Revert",
 		"outputs": [],
 		"stateMutability": "pure",

@@ -22,7 +22,7 @@ git checkout mxj/evm-debug
 
 6. Deploy `./contracts/test1.sol` with test2’s address
 
-7. Call test1’s test1Revert and get the `txhash`
+7. Call test1’s test1Revert with any address and get the `txhash`
 
 8. Down load the repository
 
@@ -71,39 +71,49 @@ $ python3 __main__.py
         "from": "0xA4c1095732718699cf068BeD7CC780c175903b1e",
         "to": "0x55Ab234103Ec829a76D2a73e3456389e95387D4D",
         "op": "STATICCALL",
-        "function": "test2Revert()",
-        "inputs": {}
+        "function": "test2Revert(address)",
+        "inputs": {
+            "tmp": "0x2CF4ea7dF75b513509d95946B43062E26bD88035"
+        }
     },
     {
         "from": "0x55Ab234103Ec829a76D2a73e3456389e95387D4D",
         "to": "0x48855b5882C30d6a2C926F9cb80782f58B10d497",
         "op": "STATICCALL",
-        "function": "test3Revert()",
-        "inputs": {}
+        "function": "test3Revert(address)",
+        "inputs": {
+            "tmp": "0x2CF4ea7dF75b513509d95946B43062E26bD88035"
+        }
     },
     {
         "from": "0x48855b5882C30d6a2C926F9cb80782f58B10d497",
         "to": "0xd84d4030880352B03F6746ACa893a4aF9EDC6134",
         "op": "STATICCALL",
-        "function": "test4Revert()",
-        "inputs": {}
+        "function": "test4Revert(address)",
+        "inputs": {
+            "tmp": "0x2CF4ea7dF75b513509d95946B43062E26bD88035"
+        }
     },
     {
         "from": "0xd84d4030880352B03F6746ACa893a4aF9EDC6134",
         "to": "0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7",
         "op": "STATICCALL",
-        "function": "test5Revert()",
-        "inputs": {}
+        "function": "test5Revert(address)",
+        "inputs": {
+            "tmp": "0x2CF4ea7dF75b513509d95946B43062E26bD88035"
+        }
     },
     {
         "from": "0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7",
         "to": "0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36",
         "op": "STATICCALL",
-        "function": "test6Revert()",
-        "inputs": {},
-        "revert_msg": "call test6Revert"
+        "function": "test6Revert(address)",
+        "inputs": {
+            "tmp": "0x2CF4ea7dF75b513509d95946B43062E26bD88035"
+        },
+        "revert_msg": "0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002463616c6c2074657374365265766572742cf4ea7df75b513509d95946b43062e26bd8803500000000000000000000000000000000000000000000000000000000"
     }
-]                                                                                                                                                                          
+]                                                                                                                                                
 ```
 
 Every item in the stack represents that contract `from` calls the `function` of contract `to`.

@@ -137,14 +137,14 @@ build = Path(__file__).parent.joinpath("build/contracts")
 if __name__ == '__main__':
     # web3.connect("http://okexchaintest-rpc2.okexcn.com:26659")
     web3.connect("http://127.0.0.1:8545")
-    txhash = "0x52a3cdc7a9dbff8b61fd85dfc35f393eb022d22779cd1f0fc69491c3aee4b61a"
+    txhash = "0x33b96a42d6e25ed78a117aa4305234891f6bcb39105ca9179015069e93828779"
 
     resigter_contract("0x0d021d10ab9E155Fc1e8705d12b73f9bd3de0a36", "test6.abi")
     resigter_contract("0x1d29789a81aa381fE5830cd378Bb8F5c76E8C8a7", "test5.abi")
     resigter_contract("0xd84d4030880352B03F6746ACa893a4aF9EDC6134", "test4.abi")
     resigter_contract("0x48855b5882C30d6a2C926F9cb80782f58B10d497", "test3.abi")
     resigter_contract("0x55Ab234103Ec829a76D2a73e3456389e95387D4D", "test2.abi")
-    resigter_contract("0xA4c1095732718699cf068BeD7CC780c175903b1e", "test1.abi")
+    resigter_contract("0x8eEeEC3C0A70408C82eC256d762dDe59b2e1b8Cf", "test1.abi")
 
     tracesPath = Path(__file__).parent.joinpath("traces")
 

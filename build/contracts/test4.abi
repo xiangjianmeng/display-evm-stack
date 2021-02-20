@@ -11,7 +11,13 @@
 		"type": "constructor"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tmp",
+				"type": "address"
+			}
+		],
 		"name": "test4Revert",
 		"outputs": [],
 		"stateMutability": "nonpayable",
